@@ -11,14 +11,14 @@ function App() {
     text: ""
   })
 
-  const updateLanguage = (newLanguage) => {
+  const updateLanguage = (newLanguage: string) => {
     setBody({
       ...body,
       from: newLanguage
     })
   };
 
-  const updateText = (newtext) => {
+  const updateText = (newtext: string) => {
     setBody({
       ...body,
       text: newtext

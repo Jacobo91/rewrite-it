@@ -1,12 +1,14 @@
+import { DemoProps } from "../types";
 
-const Demo = ({ setText, body }) => {
 
-  const handleTextChange = (e) => {
+const Demo = ({ setText, body } : DemoProps) => {
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setText(newText)
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(body)
   };

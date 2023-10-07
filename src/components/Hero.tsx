@@ -1,9 +1,11 @@
-import logo from '../assets/pencil.svg'
-import { languages } from '../languages'
+import logo from '../assets/pencil.svg';
+import { languages } from '../languages';
+import { HeroProps } from '../types'
 
-const Hero = ({ setLanguage }) => {
 
-    const handleLanguage = (e) => {
+const Hero = ({ setLanguage } : HeroProps) => {
+
+    const handleLanguage = ( e: React.ChangeEvent<HTMLSelectElement>) => {
         const newLanguage = e.target.value;
         setLanguage(newLanguage)
     };
@@ -26,13 +28,11 @@ const Hero = ({ setLanguage }) => {
                         className='outline-green-500 bg-inherit text-center'
                         onChange={handleLanguage}
                     >
-                        {
-                            Object.keys(languages).map(code => (
-                                <option value={code} key={code}>
-                                    {languages[code]}
-                                </option>
-                            ))
-                        }
+                        {(Object.keys(languages) as Array<keyof typeof languages>).map((code) => (
+                            <option value={code} key={code}>
+                                {languages[code]}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
