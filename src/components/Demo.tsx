@@ -76,6 +76,13 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
         </button>
       </form>
 
+      {rephrasedText && <button
+          className="bg-green-400 block w-60 p-2 mx-auto mt-4 rounded-md"
+          onClick={() => window.location.reload()}
+        >
+          Continue Rephrasing
+        </button>}
+
       <div className="mt-8 p-4">
         {/* Display Results */}
         {error ? (
