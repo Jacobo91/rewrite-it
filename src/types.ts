@@ -10,18 +10,23 @@ type Body = {
 
 export interface HeroProps {
     setLanguage: (newLanguage: string) => void;
-    history: string[]
+    history: Element[];
+    setHistory: Dispatch<SetStateAction<Element[]>>;
 }
 
 export interface DemoProps {
     setText: (newtext: string) => void;
     body: Body;
-    setHistory: Dispatch<SetStateAction<string[]>>;
-    history: string[]
+    setHistory: Dispatch<SetStateAction<Element[]>>;
+    history: Element[]
 }
 
 export interface HistoryElementProps {
-    element: string;
-    index: number
+    element: Element;
+    onDelete: (id: string) => void;
 }
 
+export interface Element {
+    id: string;
+    text: string
+}

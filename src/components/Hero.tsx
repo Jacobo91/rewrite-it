@@ -4,7 +4,7 @@ import { languages } from "../languages";
 import { HeroProps } from "../types";
 import HistoryElement from './HistoryElement';
 
-const Hero = ({ setLanguage, history }: HeroProps) => {
+const Hero = ({ setLanguage, history, setHistory }: HeroProps) => {
 
 const [isOpen, setIsOpen] = useState<boolean>(false);   
 
@@ -13,6 +13,13 @@ const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLanguage(newLanguage);
 };
 
+const deleteElement = (id: string) => {
+    console.log(id)
+    const updatedHistory = history.filter(element => element.id !== id);
+    console.log(updatedHistory);
+    setHistory(updatedHistory);
+    localStorage.setItem('history', JSON.stringify(updatedHistory))
+}
 
 return (
     <header>
@@ -57,8 +64,8 @@ return (
             <section>
                 {
                     history && (
-                        history.map((element, index) => (
-                            <HistoryElement element={element} index={index}/>
+                        history.map((element) => (
+                            <HistoryElement element={element} onDelete={deleteElement} key={element.id}/>
                         ))
                     )
                 }

@@ -3,6 +3,7 @@ import { useCreateRephrasedTextMutation } from '../services/rephrase';
 import { useEffect, useState } from "react";
 import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
+import { generateUniqueId } from '../utils';
 
 const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
@@ -27,7 +28,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
     if (response) {
       setIsLoading(false);
       setRephrasedText(response);
-      const updatedHistory = [...history, response.error.data];
+      const updatedHistory = [...history, {id: generateUniqueId(), text: response.error.data}];
       localStorage.setItem('history', JSON.stringify(updatedHistory));
     } else {
       setError(true)
