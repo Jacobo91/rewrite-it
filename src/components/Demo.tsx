@@ -40,15 +40,17 @@ const Demo = ({ setText, body } : DemoProps) => {
   useEffect(() => { console.log(copied) }, [rephrasedText])
 
   return (
-    <section className="w-full max-w-xl mx-auto my-[6rem] px-4">
-      <h2 className="green_gradient text-2xl mb-2">Paste text underneath:</h2>
+    <section className="w-full max-w-xl mx-auto py-20">
+      <h2 className="green_gradient text-2xl mb-2">
+        Paste your text underneath:
+      </h2>
       <form action="" className="flex gap-4" onSubmit={handleSubmit}>
         <textarea
           name="text"
           id="user_text"
           rows={8}
           placeholder="Paste your text here..."
-          className="w-full placeholder:text-gray-700 indent-1 boder
+          className="w-full placeholder:text-gray-700 p-2 boder
         outline-green-500 peer"
           required
           onChange={handleTextChange}
@@ -64,9 +66,7 @@ const Demo = ({ setText, body } : DemoProps) => {
       <div className="mt-8 p-4">
         {/* Display Results */}
         {error ? (
-          <div
-            className="flex flex-col justify-center align-center"
-          >
+          <div className="flex flex-col justify-center align-center">
             <p>Oooops something unexpected happened, please refresh the page</p>
             <button
               className="refresh_btn"
@@ -84,12 +84,10 @@ const Demo = ({ setText, body } : DemoProps) => {
             <>
               <div className="flex justify-between align-center">
                 <h2 className="green_gradient text-2xl mb-2">Rephrased:</h2>
-                <button
-                  onClick={handleCopy}
-                >
+                <button onClick={handleCopy}>
                   <img
                     className="w-5 mr-4"
-                    src={copied ? check : copy} 
+                    src={copied ? check : copy}
                     alt={`${copied ? "check_icon" : "copy_icon"}`}
                   />
                 </button>
