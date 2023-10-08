@@ -14,9 +14,7 @@ const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
 };
 
 const deleteElement = (id: string) => {
-    console.log(id)
     const updatedHistory = history.filter(element => element.id !== id);
-    console.log(updatedHistory);
     setHistory(updatedHistory);
     localStorage.setItem('history', JSON.stringify(updatedHistory))
 }

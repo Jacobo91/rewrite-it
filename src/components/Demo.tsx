@@ -12,7 +12,6 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
-  // const [history, setHistory] = useState<string[]>([]);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
@@ -29,6 +28,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
       setIsLoading(false);
       setRephrasedText(response);
       const updatedHistory = [...history, {id: generateUniqueId(), text: response.error.data}];
+      setHistory(updatedHistory);
       localStorage.setItem('history', JSON.stringify(updatedHistory));
     } else {
       setError(true)
@@ -50,7 +50,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
   }, []);
 
   return (
-    <section className="w-full max-w-xl mx-auto py-20">
+    <section className="w-full max-w-xl mx-auto py-20 px-4 sm:px-0">
       <h2 className="green_gradient text-2xl mb-2">
         Paste your text underneath:
       </h2>
