@@ -59,7 +59,7 @@ return (
             </div>
 
             {/* History */}
-            <section>
+            <section className={`${isOpen ? "opacity_on" : "opacity_off"}`}>
                 {
                     history && (
                         history.map((element) => (
