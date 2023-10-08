@@ -26,3 +26,11 @@ body {
 .green_btn {
   @apply bg-green-400 rounded-full text-white px-3 ml-4
 }
+
+.spinner {
+  @apply border-4 border-green-200 border-t-green-400 rounded-full w-20 h-20 animate-spin
+}
+
+.refresh_btn {
+  @apply rounded-full  mt-8 bg-green-500 text-white inline-block mx-auto w-20 h-20
+}
