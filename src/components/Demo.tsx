@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 
-const Demo = ({ setText, body } : DemoProps) => {
+const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
   const [createRephrasedText] = useCreateRephrasedTextMutation();
   const [rephrasedText, setRephrasedText] = useState<object | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
+  // const [history, setHistory] = useState<string[]>([]);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
@@ -24,8 +25,10 @@ const Demo = ({ setText, body } : DemoProps) => {
     const response = await createRephrasedText(body);
     
     if (response) {
-      setIsLoading(false)
-      setRephrasedText(response)
+      setIsLoading(false);
+      setRephrasedText(response);
+      const updatedHistory = [...history, response.error.data];
+      localStorage.setItem('history', JSON.stringify(updatedHistory));
     } else {
       setError(true)
     }
@@ -37,7 +40,13 @@ const Demo = ({ setText, body } : DemoProps) => {
     setCopied(true)
   };
 
-  useEffect(() => { console.log(copied) }, [rephrasedText])
+  useEffect(() =>  {
+    const historyInLocalStorafe = localStorage.getItem('history');
+
+    if (historyInLocalStorafe) {
+      setHistory(JSON.parse(historyInLocalStorafe))
+    }
+  }, []);
 
   return (
     <section className="w-full max-w-xl mx-auto py-20">

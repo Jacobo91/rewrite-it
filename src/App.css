@@ -34,3 +34,17 @@ body {
 .refresh_btn {
   @apply rounded-full  mt-8 bg-green-500 text-white inline-block mx-auto w-20 h-20
 }
+
+.aside {
+  @apply absolute top-[100%] left-0 z-10 bg-white w-[250px] 
+  h-screen transition-transform duration-500 ease-in-out 
+  transform origin-left
+}
+
+.opacity_on {
+  @apply transition-opacity duration-200 ease-in-out delay-[400ms]
+}
+
+.opacity_off {
+  @apply opacity-0
+}

@@ -1,7 +1,7 @@
 import './App.css';
 import Hero from './components/Hero';
 import Demo from './components/Demo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function App() {
@@ -10,6 +10,8 @@ function App() {
     from: "en",
     text: ""
   })
+
+  const [history, setHistory] = useState<string[]>([]);
 
   const updateLanguage = (newLanguage: string) => {
     setBody({
@@ -27,8 +29,8 @@ function App() {
 
   return (
     <main>
-      <Hero setLanguage={updateLanguage}/>
-      <Demo  setText={updateText} body={body}/>
+      <Hero setLanguage={updateLanguage} history={history} />
+      <Demo  setText={updateText} body={body} setHistory={setHistory} history={history}/>
     </main>
   )
 }
