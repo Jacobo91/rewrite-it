@@ -5,6 +5,7 @@ import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 import { generateUniqueId } from '../utils';
 
+
 const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
   const [createRephrasedText] = useCreateRephrasedTextMutation();
@@ -25,6 +26,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
     const response = await createRephrasedText(body);
     
     if (response) {
+      console.log(response)
       setIsLoading(false);
       setRephrasedText(response);
       const updatedHistory = [...history, {id: generateUniqueId(), text: response.error.data}];
@@ -38,7 +40,8 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(rephrasedText?.error?.data);
-    setCopied(true)
+    setCopied(true);
+    setTimeout(() => setCopied(false), 5000)
   };
 
   useEffect(() =>  {
@@ -102,7 +105,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
                   />
                 </button>
               </div>
-              <p>{rephrasedText?.error?.data}</p>
+              <p className="max-h-[50vh] overflow-y-scroll">{rephrasedText?.error?.data}</p>
             </>
           )
         )}
