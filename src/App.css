@@ -15,6 +15,10 @@ body {
   background: #f6fff9;
 }
 
+.head_text {
+  @apply text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl text-center;
+}
+
 .green_gradient {
   @apply bg-gradient-to-r from-green-500 via-green-400 to-green-300 bg-clip-text text-transparent;
 }

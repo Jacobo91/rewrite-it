@@ -83,12 +83,12 @@ return (
             <i className="fa-solid fa-bars text-2xl p-2"></i>
         </button>
 
-        <h1 className="text-4xl sm:text-5xl">
+        <h1 className="head_text">
         Plagiarism-Proof
         <br />
         Your Prose
         </h1>
-        <p className="mt-2 text-sm">Elevate your text with AI text rewriting</p>
+        <p className="mt-2 text-md">Elevate your text with AI text rewriting</p>
     </div>
     </header>
     );
