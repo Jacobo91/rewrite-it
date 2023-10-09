@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 import { generateUniqueId } from '../utils';
+import { Response } from "../types";
 
 
 const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
   const [createRephrasedText] = useCreateRephrasedTextMutation();
-  const [rephrasedText, setRephrasedText] = useState<object | null>(null);
+  const [rephrasedText, setRephrasedText] = useState<Response | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
@@ -46,7 +47,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
   useEffect(() =>  {
     const historyInLocalStorafe = localStorage.getItem('history');
-
+    console.log(rephrasedText)
     if (historyInLocalStorafe) {
       setHistory(JSON.parse(historyInLocalStorafe))
     }

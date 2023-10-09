@@ -30,3 +30,12 @@ export interface Element {
     id: string;
     text: string
 }
+
+export interface Response {
+    error: {
+        status: string;
+        originalStatus: number;
+        data: string;
+        error: string;
+    }
+}
