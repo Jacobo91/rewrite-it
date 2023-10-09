@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 import { generateUniqueId } from '../utils';
-import { Response } from "../types";
 import { RephraseResponse } from "../types";
 
 
 const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
   const [createRephrasedText] = useCreateRephrasedTextMutation();
-  const [rephrasedText, setRephrasedText] = useState<Response | null>(null);
+  const [rephrasedText, setRephrasedText] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
@@ -26,10 +25,11 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
     
     setIsLoading(true)
     const response: RephraseResponse = await createRephrasedText(body);
-    
-    if (response.data) {
+    console.log(response)
+    if (response.error.data) {
       setIsLoading(false);
-      setRephrasedText(response.data);
+      setRephrasedText(response.error.data);
+  
       const updatedHistory = [...history, {id: generateUniqueId(), text: response.error.data}];
       setHistory(updatedHistory);
       localStorage.setItem('history', JSON.stringify(updatedHistory));
@@ -40,7 +40,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
   };
 
   const handleCopy = () => {
-    const textCopy = rephrasedText?.error?.data || '';
+    const textCopy = rephrasedText || '';
     navigator.clipboard.writeText(textCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 5000)
@@ -48,7 +48,6 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
 
   useEffect(() =>  {
     const historyInLocalStorafe = localStorage.getItem('history');
-    console.log(rephrasedText)
     if (historyInLocalStorafe) {
       setHistory(JSON.parse(historyInLocalStorafe))
     }
@@ -114,7 +113,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
                   />
                 </button>
               </div>
-              <p className="max-h-[50vh] overflow-y-scroll">{rephrasedText?.error?.data}</p>
+              <p className="max-h-[50vh] overflow-y-scroll">{rephrasedText}</p>
             </>
           )
         )}
