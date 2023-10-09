@@ -39,3 +39,8 @@ export interface Response {
         error: string;
     }
 }
+
+export type RephraseResponse = {
+    data?: any; 
+    error?: any; 
+};

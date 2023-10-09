@@ -5,6 +5,7 @@ import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 import { generateUniqueId } from '../utils';
 import { Response } from "../types";
+import { RephraseResponse } from "../types";
 
 
 const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
@@ -24,12 +25,11 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
     e.preventDefault();
     
     setIsLoading(true)
-    const response = await createRephrasedText(body);
+    const response: RephraseResponse = await createRephrasedText(body);
     
-    if (response) {
-      console.log(response)
+    if (response.data) {
       setIsLoading(false);
-      setRephrasedText(response);
+      setRephrasedText(response.data);
       const updatedHistory = [...history, {id: generateUniqueId(), text: response.error.data}];
       setHistory(updatedHistory);
       localStorage.setItem('history', JSON.stringify(updatedHistory));
@@ -40,7 +40,8 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(rephrasedText?.error?.data);
+    const textCopy = rephrasedText?.error?.data || '';
+    navigator.clipboard.writeText(textCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 5000)
   };
