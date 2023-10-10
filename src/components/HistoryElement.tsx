@@ -2,17 +2,11 @@ import { useState } from 'react';
 import { HistoryElementProps } from '../types'
 import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
-
+import { handleCopy } from '../utils';
 
 const HistoryElement = ({ element, onDelete } : HistoryElementProps) => {
 
     const [copied, setCopied] = useState<boolean>(false); 
-
-    const handleCopy = (text: string) => {
-        navigator.clipboard.writeText(text);
-        setCopied(true)
-        setTimeout(() => setCopied(false), 5000)
-    };
     
     const handleDelete = (id: string) => {
         onDelete(id)
@@ -32,7 +26,7 @@ const HistoryElement = ({ element, onDelete } : HistoryElementProps) => {
                 </button>
 
                 <button
-                    onClick={() => handleCopy(element.text)}
+                    onClick={() => handleCopy(element.text, setCopied)}
                     className='self-center'
                 >
                     <img

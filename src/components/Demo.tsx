@@ -5,6 +5,7 @@ import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 import { generateUniqueId } from '../utils';
 import { RephraseResponse } from "../types";
+import { handleCopy } from "../utils";
 
 
 const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
@@ -37,13 +38,6 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
       setError(true)
     }
   
-  };
-
-  const handleCopy = () => {
-    const textCopy = rephrasedText || '';
-    navigator.clipboard.writeText(textCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 5000)
   };
 
   useEffect(() =>  {
@@ -105,7 +99,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
             <>
               <div className="flex justify-between align-center">
                 <h2 className="green_gradient text-2xl mb-2">Rephrased:</h2>
-                <button onClick={handleCopy}>
+                <button onClick={() => handleCopy(rephrasedText, setCopied)}>
                   <img
                     className="w-5 mr-4"
                     src={copied ? check : copy}
