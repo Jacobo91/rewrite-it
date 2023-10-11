@@ -1,5 +1,5 @@
 import { useCreateRephrasedTextMutation } from '../services/rephrase';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 import { generateUniqueId } from '../utils';
@@ -41,20 +41,6 @@ const Demo = () => {
     }
   
   };
-
-  const handleCopy = () => {
-    const textCopy = rephrasedText || '';
-    navigator.clipboard.writeText(textCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 5000)
-  };
-
-  useEffect(() =>  {
-    const historyInLocalStorafe = localStorage.getItem('history');
-    if (historyInLocalStorafe) {
-      setHistory(JSON.parse(historyInLocalStorafe))
-    }
-  }, []);
 
   return (
     <section className="w-full max-w-xl mx-auto py-20 px-4 sm:px-0">
