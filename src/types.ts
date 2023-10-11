@@ -4,25 +4,8 @@ export type Languages = {
     [key: string]: string;
 };
 
-type Body = {
-    [key: string]: string;
-}
-
-export interface HeroProps {
-    setLanguage: (newLanguage: string) => void;
-    history: Element[];
-    setHistory: Dispatch<SetStateAction<Element[]>>;
-}
-
-export interface DemoProps {
-    setText: (newtext: string) => void;
-    body: Body;
-    setHistory: Dispatch<SetStateAction<Element[]>>;
-    history: Element[]
-}
-
 export interface HistoryElementProps {
-    element: Element;
+    element: {id: '', text: ''};
     onDelete: (id: string) => void;
 }
 
@@ -43,4 +26,35 @@ export interface Response {
 export type RephraseResponse = {
     data?: any; 
     error?: any; 
+};
+
+export type HistoryElem = {
+    id: '',
+    text: ''
+}
+
+export type AppState = {
+    rephrase: {
+        queries: {},
+        mutations: {},
+        provided: {},
+        subscriptions: {},
+        config: {
+        online: true,
+        focused: false,
+        middlewareRegistered: false,
+        refetchOnFocus: false,
+        refetchOnReconnect: false,
+        refetchOnMountOrArgChange: false,
+        keepUnusedDataFor: 60,
+        reducerPath: 'rephrase'
+        }
+    },
+    appstate: {
+        body: {
+        from: 'en',
+        text: ''
+        },
+        history: HistoryElem[] | []
+    }
 };

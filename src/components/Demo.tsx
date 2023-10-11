@@ -1,13 +1,15 @@
-import { DemoProps } from "../types";
 import { useCreateRephrasedTextMutation } from '../services/rephrase';
 import { useEffect, useState } from "react";
 import copy from '../assets/copy.svg';
 import check from '../assets/check.svg';
 import { generateUniqueId } from '../utils';
 import { RephraseResponse } from "../types";
+import { handleCopy } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { updateText, addToHistory } from "../slices/bodySlice";
+import { AppState } from "../types";
 
-
-const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
+const Demo = () => {
 
   const [createRephrasedText] = useCreateRephrasedTextMutation();
   const [rephrasedText, setRephrasedText] = useState<string | null>(null);
@@ -15,9 +17,11 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
   const [error, setError] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
 
+  const body = useSelector((state: AppState) => state.appstate.body)
+  const dispatch = useDispatch();
+
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newText = e.target.value;
-    setText(newText)
+    dispatch(updateText(e.target.value));
   };
 
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,33 +29,18 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
     
     setIsLoading(true)
     const response: RephraseResponse = await createRephrasedText(body);
-    console.log(response)
+
     if (response.error.data) {
       setIsLoading(false);
       setRephrasedText(response.error.data);
   
-      const updatedHistory = [...history, {id: generateUniqueId(), text: response.error.data}];
-      setHistory(updatedHistory);
-      localStorage.setItem('history', JSON.stringify(updatedHistory));
+      dispatch(addToHistory({id: generateUniqueId(), text: response.error.data}))
+      
     } else {
       setError(true)
     }
   
   };
-
-  const handleCopy = () => {
-    const textCopy = rephrasedText || '';
-    navigator.clipboard.writeText(textCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 5000)
-  };
-
-  useEffect(() =>  {
-    const historyInLocalStorafe = localStorage.getItem('history');
-    if (historyInLocalStorafe) {
-      setHistory(JSON.parse(historyInLocalStorafe))
-    }
-  }, []);
 
   return (
     <section className="w-full max-w-xl mx-auto py-20 px-4 sm:px-0">
@@ -105,7 +94,7 @@ const Demo = ({ setText, body, setHistory, history } : DemoProps) => {
             <>
               <div className="flex justify-between align-center">
                 <h2 className="green_gradient text-2xl mb-2">Rephrased:</h2>
-                <button onClick={handleCopy}>
+                <button onClick={() => handleCopy(rephrasedText, setCopied)}>
                   <img
                     className="w-5 mr-4"
                     src={copied ? check : copy}

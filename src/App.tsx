@@ -1,36 +1,13 @@
 import './App.css';
 import Hero from './components/Hero';
 import Demo from './components/Demo';
-import { useState } from 'react';
-import { Element } from './types';
 
 function App() {
 
-  const [body, setBody] = useState({
-    from: "en",
-    text: ""
-  })
-
-  const [history, setHistory] = useState<Element[]>([]);
-
-  const updateLanguage = (newLanguage: string) => {
-    setBody({
-      ...body,
-      from: newLanguage
-    })
-  };
-
-  const updateText = (newtext: string) => {
-    setBody({
-      ...body,
-      text: newtext
-    })
-  };
-
   return (
     <main>
-      <Hero setLanguage={updateLanguage} history={history} setHistory={setHistory}/>
-      <Demo  setText={updateText} body={body} setHistory={setHistory} history={history}/>
+      <Hero />
+      <Demo />
     </main>
   )
 }
