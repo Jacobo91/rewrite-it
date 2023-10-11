@@ -1,22 +1,23 @@
 import { useState } from "react";
 import logo from "../assets/pencil.svg";
 import { languages } from "../languages";
-import { HeroProps } from "../types";
+import { AppState  } from "../types";
 import HistoryElement from './HistoryElement';
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromHistory, updateLanguage } from "../slices/bodySlice";
 
-const Hero = ({ setLanguage, history, setHistory }: HeroProps) => {
+const Hero = () => {
 
 const [isOpen, setIsOpen] = useState<boolean>(false);   
+const dispatch = useDispatch();
+const history = useSelector(((state: AppState) => state.appstate.history))
 
 const handleLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLanguage = e.target.value;
-    setLanguage(newLanguage);
+    dispatch(updateLanguage(e.target.value));
 };
 
 const deleteElement = (id: string) => {
-    const updatedHistory = history.filter(element => element.id !== id);
-    setHistory(updatedHistory);
-    localStorage.setItem('history', JSON.stringify(updatedHistory))
+    dispatch(removeFromHistory(id))
 }
 
 return (
